@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    /* Strings are a bad way to identify objects therefore 
+       we use constant variables.
+    */
     private const string IS_WALKING = "IsWalking";
 
     [SerializeField] private Player player;

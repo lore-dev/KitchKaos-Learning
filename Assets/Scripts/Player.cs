@@ -7,8 +7,10 @@ public class Player : MonoBehaviour
     // character move speed and also adds a variable on inspector
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private LayerMask countersLayermask;
 
     private bool isWalking;
+    private Vector3 lastInteractDir;
 
     /* Good practice to use private so that other parts of
      * code does not interfere with player
@@ -30,8 +32,21 @@ public class Player : MonoBehaviour
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
+        if (moveDir != Vector3.zero) {
+            lastInteractDir = moveDir;
+        }
+
         float interactDistance = 2f;
-        Physics.Raycast(transform.position, moveDir, interactDistance);
+        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, 
+            interactDistance, countersLayermask)) {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
+                // Has ClearCounter
+                clearCounter.Interact();
+            }
+
+        } else {
+            Debug.Log("-");
+        }
     }
 
     private void HandleMovement()

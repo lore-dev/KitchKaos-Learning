@@ -21,7 +21,6 @@ public class GameInput : MonoBehaviour
         // normalizes diagonal movement so it runs at same speed
         inputVector = inputVector.normalized;
 
-        Debug.Log(inputVector);
         return inputVector;
     }
 }
